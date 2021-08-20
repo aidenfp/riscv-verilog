@@ -9,13 +9,13 @@
 */
 module br_alu(	input [31:0] a,
 		input [31:0] b,
-		input [2:0] br_func,
+		input [2:0] func,
 		output out);
 		
 	function calcOut(input [31:0] a,
 			 input [31:0] b,
-			 input [31:0] br_func);
-		case(br_func)
+			 input [31:0] func);
+		case(func)
 			3'b000:  calcOut = a == b;
 			3'b001:  calcOut = a != b;
 			3'b010:  calcOut = $signed(a) < $signed(b);
@@ -26,5 +26,5 @@ module br_alu(	input [31:0] a,
 		endcase
 	endfunction
 	
-	assign out = calcOut(a, b, br_func); 
+	assign out = calcOut(a, b, func); 
 endmodule

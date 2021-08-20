@@ -42,17 +42,17 @@ bltu = 3'b110
 bgeu = 3'b111
 */
 
-module decode(input [31:0] inst,
+module decode(	input [31:0] inst,
 		output [31:0] imm,
 		output [4:0] rs1,
 		output [4:0] rs2,
 		output [4:0] rd,
 		output [3:0] alu_func,
 		output [2:0] br_func,
-		output [1:0] wrd_sel,
+		output [1:0] wd_sel,
 		output [1:0] pc_sel,
 		output [1:0] mem_rw,
-		output regfile_we,
+		output rf_we,
 		output b_sel);
 
 	wire [6:0] opcode = inst[6:0];
@@ -195,7 +195,7 @@ module decode(input [31:0] inst,
 		endcase
 	endfunction
 	
-	assign wrd_sel = wrdSelFunc(opcode);	
+	assign wd_sel = wrdSelFunc(opcode);	
 
 	/* PC Select
 	/  next 2'b00
@@ -224,7 +224,7 @@ module decode(input [31:0] inst,
 
 	assign mem_rw = memRWFunc(opcode);
 	
-	assign regfile_we = opcode == 7'b1100011 || opcode == 7'b0100011 ? 1'b0 : 1'b1;
+	assign rf_we = opcode == 7'b1100011 || opcode == 7'b0100011 ? 1'b0 : 1'b1;
 
 	assign b_sel = opcode == 7'b0110011 || opcode == 7'b0100011 || opcode == 7'b1100011 ? 1'b0 : 1'b1;
 
